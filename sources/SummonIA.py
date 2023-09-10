@@ -11,14 +11,21 @@ import sys
 import subprocess
 import re
 
-def launchGame():
-    blue = "/mnt/c/Program Files/BlueStacks_nxt/HD-Player.exe"
-    try:
-        subprocess.Popen(blue)
-    except Exception as e:
-        print(e)
-        sys.exit(84)
-
+def findSoftware(name):
+    for root, dirs, files in os.walk("/mnt/c/Program Files/"):
+        for file in files:
+            if file.endswith(".exe"):
+                if re.search(name, file):
+                    return root + "/" + file
+    for root, dirs, files in os.walk("/mnt/c/"):
+        for file in files:
+            if file.endswith(".exe"):
+                if re.search(name, file):
+                    return root + "/" + file
+    return None
 
 def SummonIA():
-    launchGame()
+    print(findSoftware("HD-Player.exe"))
+    if findSoftware("HD-Player.exe") == None:
+        print("Nox not found")
+        return
