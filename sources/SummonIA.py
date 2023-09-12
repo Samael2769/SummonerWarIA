@@ -11,6 +11,12 @@ import sys
 import subprocess
 import re
 import ctypes
+import pyautogui
+from PIL import ImageGrab
+import cv2
+import numpy as np
+from time import sleep
+import mouse
 
 def findSoftware(name):
     win = "C:\\Program Files\\"
@@ -38,6 +44,25 @@ def transformPath(path):
     path = path.replace(" ", "\ ")
     return path
 
+def find_image_on_screen(image_path, confidence=0.8):
+    # Load the image you want to find
+    template = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    h, w, _ = template.shape
+
+    # Take a screenshot of the screen
+    screenshot = np.array(ImageGrab.grab())
+
+    # Search for the template in the screenshot
+    result = cv2.matchTemplate(screenshot, template, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    if max_val >= confidence:
+        x, y = max_loc
+        return (x, y, w, h)
+    else:
+        return None
+    
+
 def SummonIA():
     sft = findSoftware("HD-Player")
     #sft = "/mnt/c/Program Files/BlueStacks_nxt/HD-Player.exe"
@@ -58,3 +83,10 @@ def SummonIA():
             1)
     else:
         subprocess.Popen([sft, "-package", pkg_name])
+    #sleep(10)
+    while (find_image_on_screen("Assets/add_cross.png") == None):
+        sleep(1)
+    while (find_image_on_screen("Assets/add_cross.png") != None):
+        data = find_image_on_screen("Assets/add_cross.png")
+        pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+        sleep(1)
