@@ -63,6 +63,21 @@ def find_image_on_screen(image_path, confidence=0.8):
         return None
     
 
+def find_giant():
+    while (find_image_on_screen("Assets/battle.png", 0.2) == None):
+        print("waiting for battle")
+        sleep(1)
+    data = find_image_on_screen("Assets/battle.png", 0.2)
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = find_image_on_screen("Assets/cairos.png")
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = find_image_on_screen("Assets/giant.png")
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    
+
 def SummonIA():
     sft = findSoftware("HD-Player")
     #sft = "/mnt/c/Program Files/BlueStacks_nxt/HD-Player.exe"
@@ -90,3 +105,13 @@ def SummonIA():
         data = find_image_on_screen("Assets/add_cross.png")
         pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
         sleep(1)
+    #click on the center of the screen
+    pyautogui.click(960, 540)
+    while (find_image_on_screen("Assets/dial_cross.png") == None):
+        sleep(1)
+    while(find_image_on_screen("Assets/dial_cross.png") != None):
+        data = find_image_on_screen("Assets/dial_cross.png")
+        pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+        sleep(1)
+    find_giant()
+
