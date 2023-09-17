@@ -62,20 +62,62 @@ def find_image_on_screen(image_path, confidence=0.8):
     else:
         return None
     
+def loopFind(image_path, confidence=0.5):
+    while (find_image_on_screen(image_path, confidence) == None):
+        sleep(1)
+    return find_image_on_screen(image_path, confidence)
 
 def find_giant():
-    while (find_image_on_screen("Assets/battle.png", 0.2) == None):
-        print("waiting for battle")
+    data = loopFind("Assets/Portal.png", 0.2)
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = loopFind("Assets/repeatBattle.png", 0.2)
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = loopFind	("Assets/CairosMulti.png")
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = loopFind("Assets/giant.png")
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    data = loopFind("Assets/startRepeat.png")
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    while(True):
+        data = loopFind("Assets/replay.png")
+        pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
         sleep(1)
-    data = find_image_on_screen("Assets/battle.png", 0.2)
+
+def findToa():
+    data = loopFind("Assets/battle.png", 0.2)
     pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
     sleep(1)
-    data = find_image_on_screen("Assets/cairos.png")
+    data = loopFind("Assets/toa.png", 0.2)
     pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
     sleep(1)
-    data = find_image_on_screen("Assets/giant.png")
+    data = loopFind("Assets/toaSelect.png", 0.2)
     pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
     sleep(1)
+    data = loopFind("Assets/toaAuto.png", 0.2)
+    pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+    sleep(1)
+    while(True):
+        if (find_image_on_screen("Assets/victory.png", 0.5) != None):
+            data = loopFind("Assets/victory.png", 0.5)
+            pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            sleep(1)
+            pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            sleep(1)
+            data = loopFind("Assets/toaOk.png", 0.8)
+            pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            while(find_image_on_screen("Assets/toaNext.png", 0.2) == None):
+                pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            data = loopFind("Assets/toaNext.png", 0.2)
+            pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            sleep(1)
+            data = loopFind("Assets/toaAuto.png", 0.2)
+            pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+            sleep(1)
     
 
 def SummonIA():
@@ -114,4 +156,5 @@ def SummonIA():
         pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
         sleep(1)
     find_giant()
+    #findToa()
 
