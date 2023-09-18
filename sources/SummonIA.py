@@ -154,7 +154,13 @@ def SummonIA():
     while(find_image_on_screen("Assets/dial_cross.png") != None):
         data = find_image_on_screen("Assets/dial_cross.png")
         pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
+        sleep(3)
+    data = find_image_on_screen("Assets/double_addd.png", 0.5)
+    if (data != None):
+        pyautogui.click(data[0] + data[2] / 2, data[1] + data[3] / 2)
         sleep(1)
-    find_giant()
-    #findToa()
+    if (len(sys.argv) > 1 and sys.argv[1] == "toa"):
+        findToa()
+    else:
+        find_giant()
 
